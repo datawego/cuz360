@@ -1,42 +1,39 @@
 
-ga(function(tracker) {
+     function isEmpty(str){
+         
+        if(typeof str == "undefined" || str == null || str == "")
+            return true;
+        else
+            return false ;
+    }
 
-	 var i;
-	  var trackers = ga.getAll();
-	  //console.log(trackers);
-
-	  // Modify sendHitTask for all trackers
-	  for (i = 0; i < trackers.length; i++) {
-	    var tracker = trackers[i];
-	    console.log(tracker);
-
-	    // Set anonymizeIp as a fallback
-	    //tracker.set('anonymizeIp', true); // with this, should get aip=1 for hits
-
-	    // Modifies sendHitTask for tracker to send the request to a local ipproxy server, which passes it on to
-	    // www.google-analytics.com/collect after ip anonymization
-	    tracker.set('sendHitTask', function (model) {
+  // Logs a list of all tracker names to the console.
+ga(function() {
+  var trackers = ga.getAll();
+  //console.log(JSON.stringify(ga.getAll()));
+  trackers.forEach(function(tracker) {
+    console.log(tracker.get('name'));
+    if (isEmpty(document.querySelector("meta[property='og:title']")) == false) {
+      var n_title = document.querySelector("meta[property='og:title']").getAttribute("content");
+      console.log(n_title);
+      tracker.set('title', n_title);
+    }
+    tracker.set('sendHitTask', function (model) {
 	      var payload = model.get('hitPayload');
-	      console.log(payload)
-
-			//DOX.setEventName("GA-Visit Main Page")
-			//DOX.logEvent(
-			//	DOX.Builder.event()
-			//	.setEventName("Visit")
-			//	.setProperties(
-			//		DOX.Builder.properties()
-			//		.set("ga", payload)
-		//)
-		//	)
+	      //console.log(payload)
+      
+            //CORS GET
+            var url = 'http://localhost:5001/collect';
+            var data = model.get('hitPayload');
+            console.log('SENDING data to server on ' + url + ': ' + model.get('hitPayload'));
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url + '?' + data, true);
+            xhr.onreadystatechange = function () {
+                console.log('Data sent to ' + url);
+            };
+            xhr.send(null);
+      
 	    });
-       }
-	  // Modifies sendHitTask to hit ipproxy instead of http://www.google-analytics.com directly
-  // tracker.set('sendHitTask', function(model) {
-  //  payload = model.get('hitPayload');
-  //  console.log(payload);
-
-  //  xhr.send();
-  //});
-
-
   });
+});
+  
