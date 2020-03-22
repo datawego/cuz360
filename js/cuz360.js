@@ -1,5 +1,5 @@
 
-     function isEmpty(str){
+   function isEmpty(str){
          
         if(typeof str == "undefined" || str == null || str == "")
             return true;
@@ -8,7 +8,8 @@
     }
 
   // Logs a list of all tracker names to the console.
-ga(function() {
+function loadCuz360(){
+//ga(function() {
   var trackers = ga.getAll();
   //console.log(JSON.stringify(ga.getAll()));
   trackers.forEach(function(tracker) {
@@ -35,5 +36,6 @@ ga(function() {
       
 	    });
   });
-});
+//});
+};
   
