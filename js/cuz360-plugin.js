@@ -10,23 +10,28 @@ function getCookie(cname){
 		return "";
 }
 function getSessionId(){
-	if windows.localStorage {
-	   var stime = windows.localStorage.getItem('stime');
-	   var sid = windows.localStorage.getItem('sid');
+  try {
+	//if (window.localStorage) {
+	if (typeof localStorage !== 'undefined') {
+	   var stime = window.localStorage.getItem('stime');
+	   var sid = window.localStorage.getItem('sid');
 	   var now = new Date().getTime();
-	   windows.localStorage.setItem('stime', now);
-	   if stime != null {
+	   window.localStorage.setItem('stime', now);
+	   if (stime != null) {
 	      var gap_min = (now - parseInt(stime)) / 1000 / 60;
 	      if (gap_min > 30) {
-		 windows.localStorage.setItem('sid', now);
+		 window.localStorage.setItem('sid', now);
 		 return now;
 	      }
 	      return sid;
 	   }
-	   windows.localStorage.setItem('sid', now);
+	   window.localStorage.setItem('sid', now);
 	   return now;
 	}
 	return null;
+    } catch (e) {
+	return null;
+    }
 }
 
 function getGA() {
