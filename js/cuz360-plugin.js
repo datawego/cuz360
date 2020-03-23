@@ -18,6 +18,7 @@ function CuzPlugIn(tracker, config) {
   //this.endpoint = 'http://localhost:5001/'
   var url = this.endpoint + 'collect'
   var vid = '__utmb=' + getCookie('__utmb');
+  //document.referrer;
   var addvals = 'et=' + (new Date()).getTime() + '&' + vid;
 	
   var sendHitTask = 'sendHitTask';
