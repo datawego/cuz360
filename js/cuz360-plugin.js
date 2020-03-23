@@ -11,23 +11,24 @@ function getCookie(cname){
 }
 function getSessionId(){
 	if window.localStorage {
-	   var stime = window.localStorage.getItem('stime');
-	   var sid = window.localStorage.getItem('sid');
+	   var stime = windows.localStorage.getItem('stime');
+	   var sid = windows.localStorage.getItem('sid');
 	   var now = new Date().getTime();
-	   window.localStorage.setItem('stime', now);
+	   windows.localStorage.setItem('stime', now);
 	   if stime != null {
 	      var gap_min = (now - parseInt(stime)) / 1000 / 60;
 	      if (gap_min > 30) {
-		 window.localStorage.setItem('sid', now);
+		 windows.localStorage.setItem('sid', now);
 		 return now;
 	      }
 	      return sid;
 	   }
-	   window.localStorage.setItem('sid', now);
+	   windows.localStorage.setItem('sid', now);
 	   return now;
 	}
 	return null;
 }
+
 function getGA() {
   return window[window['GoogleAnalyticsObject'] || 'ga'];
 }
