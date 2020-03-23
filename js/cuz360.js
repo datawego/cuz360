@@ -30,6 +30,7 @@ function CuzPlugIn(tracker) {
     xhr.onreadystatechange = function () {
                 console.log('Data sent to ' + this.endpoint);
     };
+    xhr.send(null);
   });
 }
 
