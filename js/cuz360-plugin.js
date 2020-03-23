@@ -10,7 +10,7 @@ function getCookie(cname){
 		return "";
 }
 function getSessionId(){
-	if window.localStorage {
+	if windows.localStorage {
 	   var stime = windows.localStorage.getItem('stime');
 	   var sid = windows.localStorage.getItem('sid');
 	   var now = new Date().getTime();
