@@ -17,8 +17,8 @@ function CuzPlugIn(tracker, config) {
   this.endpoint = (config.endpoint.substr(-1) != '/') ? config.endpoint + '/' : config.endpoint;
   //this.endpoint = 'http://localhost:5001/'
   var url = this.endpoint + 'collect'
-  var vid = 'vid=' + getCookie('__utmb');
-  var addvals = vid;
+  var vid = '__utmb=' + getCookie('__utmb');
+  var addvals = 'et=' + (new Date()).getTime() + '&' + vid;
 	
   var sendHitTask = 'sendHitTask';
   var originalSendHitTask = tracker.get(sendHitTask);
