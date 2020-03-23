@@ -9,6 +9,24 @@ function getCookie(cname){
 		}
 		return "";
 }
+function getSessionId(){
+	if window.localStorage {
+	   var stime = window.localStorage.getItem('stime');
+	   var sid = window.localStorage.getItem('sid');
+	   var now = new Date().getTime();
+	   window.localStorage.setItem('stime', now);
+	   if stime != null {
+	      var gap_min = (now - parseInt(stime)) / 1000 / 60;
+	      if (gap_min > 30) {
+		 window.localStorage.setItem('sid', now);
+		 return now;
+	      }
+	      return sid;
+	   }
+	   window.localStorage.setItem('sid', now);
+	   return now;
+	}
+}
 function getGA() {
   return window[window['GoogleAnalyticsObject'] || 'ga'];
 }
