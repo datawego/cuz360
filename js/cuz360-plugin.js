@@ -26,6 +26,7 @@ function getSessionId(){
 	   window.localStorage.setItem('sid', now);
 	   return now;
 	}
+	return null;
 }
 function getGA() {
   return window[window['GoogleAnalyticsObject'] || 'ga'];
