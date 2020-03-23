@@ -12,6 +12,7 @@ function getGA() {
 }
 
 function CuzPlugIn(tracker) {
+  // this.endpoint = (config.endpoint.substr(-1) != '/') ? config.endpoint + '/' : config.endpoint;
   this.endpoint = 'http://localhost:5001'
   var url = this.endpoint + '/collect'
 	
