@@ -7,6 +7,41 @@
             return false ;
     }
 
+function getGA() {
+  return window[window['GoogleAnalyticsObject'] || 'ga'];
+}
+
+function CuzPlugIn(tracker) {
+  this.endpoint = 'http://localhost:5001/collect'
+	
+  if (isEmpty(document.querySelector("meta[property='og:title']")) == false) {
+      var n_title = document.querySelector("meta[property='og:title']").getAttribute("content");
+      console.log(n_title);
+      tracker.set('title', n_title);
+  }
+  
+  var sendHitTask = 'sendHitTask';
+  var originalSendHitTask = tracker.get(sendHitTask);
+  tracker.set(sendHitTask, function(model) {
+    var payload = model.get('hitPayload');
+    //originalSendHitTask(model);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', this.endpoint + '?' + payload, true);
+    xhr.onreadystatechange = function () {
+                console.log('Data sent to ' + this.endpoint);
+    };
+  });
+}
+
+function providePlugin() {
+  var ga = getGA();
+  if (typeof ga == 'function') {
+    ga('provide', 'cuzPlugIn', CuzPlugIn);
+  }
+}
+providePlugin();
+
+
   // Logs a list of all tracker names to the console.
 function loadCuz360(){
 //ga(function() {
