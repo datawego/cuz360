@@ -12,7 +12,8 @@ function getGA() {
 }
 
 function CuzPlugIn(tracker) {
-  this.endpoint = 'http://localhost:5001/collect'
+  this.endpoint = 'http://localhost:5001'
+  var url = this.endpoint + '/collect'
 	
   if (isEmpty(document.querySelector("meta[property='og:title']")) == false) {
       var n_title = document.querySelector("meta[property='og:title']").getAttribute("content");
@@ -26,9 +27,9 @@ function CuzPlugIn(tracker) {
     var payload = model.get('hitPayload');
     //originalSendHitTask(model);
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', this.endpoint + '?' + payload, true);
+    xhr.open('GET', url + '?' + payload, true);
     xhr.onreadystatechange = function () {
-                console.log('Data sent to ' + this.endpoint);
+                console.log('Data sent to ' + url);
     };
     xhr.send(null);
   });
