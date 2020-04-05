@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Real time map of events</title>
+        <script src="https://cdn.jsdelivr.net/lodash/4.11.2/lodash.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://d3js.org/topojson.v1.min.js"></script>
+        <script src='d3map.js'></script>
+        <style type="text/css">
+          body {
+            background: #f4f4f4;
+          }
+
+          svg {
+            display: block;
+            margin: auto;
+          }
+
+          .land-boundary {
+            fill: grey;
+          }
+
+          .state-boundary {
+            fill: none;
+            stroke: white;
+            stroke-width: 0.25;
+          }
+        </style>
+    </head>
+    <body>
+      <div id='root'></div>
+      <script>
+        let width = 960,
+            height = 500;
+
+        let projection = d3.geo.albersUsa()
+                               .scale(1000)
+                               .translate([width / 2, height / 2]);
+
+        let path = d3.geo.path()
+                     .projection(projection);
+
+        d3_draw(d3.select('#root'));
+
+        d3.json('zipcodes.json', function(zips) {
+          let zipObjs = Object.keys(zips).map(x => Object({lat: zips[x].lat, lon: zips[x].lon}));
+
+          var filteredZips = zipObjs.filter(zip => zip.lat >= 18);
+
+          setInterval(() => {
+            // insert data received via ajax/fetch request
+            let sampleFilteredZips = getSampleZips(filteredZips, 0.0001);
+
+            d3_ping(d3.select('#root'), sampleFilteredZips)
+          }, 1000);
+        });
+      </script>
+    </body>
+</html>
