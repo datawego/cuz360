@@ -34,9 +34,12 @@ function CuzPlugIn(tracker, config) {
 	  //this.endpoint = 'http://localhost:5001/'
 	  var url = this.endpoint + 'collect?trackerId=' + tracker.get('trackingId');
 
-	  var vid = '__utmb=' + getCookie('__utmb');
-	  //document.referrer;
-	  var addvals = 'et=' + (new Date()).getTime() + '&' + vid;
+	  var added = '__utmb=' + getCookie('__utmb');
+	  let ref = document.referrer;
+	  if( ref != null && ref != "" ){
+	      added = added + '&ref=' + ref;
+	  }
+	  var addvals = 'et=' + (new Date()).getTime() + '&' + added;
 
 		
 	  var sendHitTask = 'sendHitTask';
